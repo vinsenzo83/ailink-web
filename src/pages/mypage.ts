@@ -273,16 +273,20 @@ export function mypagePage(): string {
   </style>
 
   <script>
-  // ── Auth guard ─────────────────────────────────────────────────
+  // ── Auth guard — 즉시 실행 (DOMContentLoaded 전에 리다이렉트) ──
   function getUser() {
-    try { return JSON.parse(sessionStorage.getItem('ailink_user') || 'null'); } catch(e) { return null; }
+    try { return JSON.parse(localStorage.getItem('ailink_user') || 'null'); } catch(e) { return null; }
   }
+
+  // 로그인 안됐으면 즉시 리다이렉트
+  (function() {
+    if (!getUser()) { window.location.replace('/login'); }
+  })();
 
   window.addEventListener('DOMContentLoaded', () => {
     const user = getUser();
     if (!user) {
-      // Not logged in → redirect to login
-      window.location.href = '/login';
+      window.location.replace('/login');
       return;
     }
 
@@ -324,9 +328,9 @@ export function mypagePage(): string {
 
   // ── Logout ─────────────────────────────────────────────────────
   function logout() {
-    sessionStorage.removeItem('ailink_user');
+    localStorage.removeItem('ailink_user');
     showToast('Logged out successfully');
-    setTimeout(() => { window.location.href = '/login'; }, 1200);
+    setTimeout(() => { window.location.replace('/login'); }, 1200);
   }
 
   // ── Copy helpers ───────────────────────────────────────────────

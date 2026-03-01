@@ -24,9 +24,8 @@ app.get('/vesting', (c) => c.html(vestingPage()))
 // ─── Auth Helper Pages ────────────────────────────────────────────────────────
 app.get('/forgot-password', (c) => c.redirect('/login', 302))
 app.get('/logout', (c) => c.html(`<!DOCTYPE html><html><head><script>
-  sessionStorage.removeItem('ailink_user');
   localStorage.removeItem('ailink_user');
-  window.location.href = '/login';
+  window.location.replace('/login');
 </script></head><body></body></html>`))
 
 // ─── Legal Pages ──────────────────────────────────────────────────────────────

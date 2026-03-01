@@ -34,7 +34,7 @@ export function loginPage(): string {
       </div>
 
       <!-- Main Card -->
-      <div class="glass-card" style="padding:36px;border-radius:24px;border:1px solid rgba(49,242,195,0.15);">
+      <div class="glass-card" id="login-card" style="padding:36px;border-radius:24px;border:1px solid rgba(49,242,195,0.15);">
 
         <!-- Tab Switch -->
         <div style="display:grid;grid-template-columns:1fr 1fr;background:rgba(255,255,255,0.04);border-radius:12px;padding:4px;margin-bottom:28px;gap:4px;" id="tab-bar">
@@ -78,10 +78,10 @@ export function loginPage(): string {
             </button>`).join('')}
           </div>
 
-          <!-- Wallet connecting spinner (hidden by default) -->
+          <!-- Wallet connecting spinner -->
           <div id="wallet-connecting" style="display:none;text-align:center;padding:24px 0;">
             <div style="width:52px;height:52px;border:3px solid rgba(49,242,195,0.15);border-top-color:var(--mint);border-radius:50%;animation:rotate 0.9s linear infinite;margin:0 auto 14px;"></div>
-            <p style="font-size:14px;color:#fff;font-weight:600;" id="wc-label">Connecting to MetaMask...</p>
+            <p style="font-size:14px;color:#fff;font-weight:600;" id="wc-label">Connecting...</p>
             <p style="font-size:12px;color:var(--text-muted);margin-top:4px;">Please approve the request in your wallet</p>
           </div>
 
@@ -98,7 +98,7 @@ export function loginPage(): string {
         <!-- ── EMAIL PANEL ── -->
         <div id="panel-email" style="display:none;">
 
-          <!-- Error / Success banners -->
+          <!-- Error banner -->
           <div id="login-error" style="display:none;background:rgba(255,80,80,0.08);border:1px solid rgba(255,80,80,0.25);border-radius:10px;padding:12px 16px;margin-bottom:16px;align-items:center;gap:10px;">
             <i class="fas fa-times-circle" style="color:#FF5050;flex-shrink:0;"></i>
             <span id="login-error-msg" style="font-size:13px;color:#FF8080;"></span>
@@ -136,7 +136,7 @@ export function loginPage(): string {
             </div>
 
             <div style="text-align:right;margin-bottom:22px;">
-              <a href="/forgot-password" style="font-size:12px;color:var(--mint);text-decoration:none;font-weight:500;">Forgot password?</a>
+              <a href="/login" style="font-size:12px;color:var(--mint);text-decoration:none;font-weight:500;">Forgot password?</a>
             </div>
 
             <!-- Submit -->
@@ -197,38 +197,45 @@ export function loginPage(): string {
   </section>
 
   <script>
+  // ── 이미 로그인된 경우 즉시 마이페이지로 ──────────────────────
+  (function() {
+    try {
+      var u = localStorage.getItem('ailink_user');
+      if (u && JSON.parse(u)) {
+        window.location.replace('/mypage');
+      }
+    } catch(e) {}
+  })();
+
   // ── Tab switch ────────────────────────────────────────────────
   function switchTab(tab) {
-    const isWallet = tab === 'wallet';
+    var isWallet = tab === 'wallet';
     document.getElementById('panel-wallet').style.display = isWallet ? 'block' : 'none';
     document.getElementById('panel-email').style.display  = isWallet ? 'none'  : 'block';
-
-    const tw = document.getElementById('tab-wallet');
-    const te = document.getElementById('tab-email');
+    var tw = document.getElementById('tab-wallet');
+    var te = document.getElementById('tab-email');
     tw.style.background = isWallet ? 'linear-gradient(135deg,#003BFF,#1a52ff)' : 'transparent';
     tw.style.color       = isWallet ? '#fff' : 'var(--text-muted)';
     te.style.background  = !isWallet ? 'linear-gradient(135deg,#003BFF,#1a52ff)' : 'transparent';
     te.style.color        = !isWallet ? '#fff' : 'var(--text-muted)';
   }
 
-  // ── Validation helpers ────────────────────────────────────────
+  // ── Field error helpers ───────────────────────────────────────
   function showFieldError(id, msg) {
-    const el = document.getElementById(id);
-    el.textContent = msg;
-    el.style.display = 'block';
+    var el = document.getElementById(id);
+    el.textContent = msg; el.style.display = 'block';
   }
   function clearFieldError(id) {
-    const el = document.getElementById(id);
+    var el = document.getElementById(id);
     if (el) { el.style.display = 'none'; el.textContent = ''; }
   }
   function showBanner(msg) {
-    const el = document.getElementById('login-error');
+    var el = document.getElementById('login-error');
     document.getElementById('login-error-msg').textContent = msg;
     el.style.display = 'flex';
-    setTimeout(() => { el.style.display = 'none'; }, 4000);
+    setTimeout(function(){ el.style.display = 'none'; }, 4500);
   }
-
-  function isValidEmail(v) { return /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(v); }
+  function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
 
   // ── Email Login ───────────────────────────────────────────────
   function handleEmailLogin(e) {
@@ -236,56 +243,44 @@ export function loginPage(): string {
     clearFieldError('email-err');
     clearFieldError('pw-err');
 
-    const email = document.getElementById('email-input').value.trim();
-    const pw    = document.getElementById('pw-input').value;
-    let valid   = true;
+    var email = document.getElementById('email-input').value.trim();
+    var pw    = document.getElementById('pw-input').value;
+    var valid = true;
 
     if (!email) {
-      showFieldError('email-err', 'Email address is required.');
-      valid = false;
+      showFieldError('email-err', 'Email address is required.'); valid = false;
     } else if (!isValidEmail(email)) {
-      showFieldError('email-err', 'Please enter a valid email address.');
-      valid = false;
+      showFieldError('email-err', 'Please enter a valid email address.'); valid = false;
     }
-
     if (!pw) {
-      showFieldError('pw-err', 'Password is required.');
-      valid = false;
+      showFieldError('pw-err', 'Password is required.'); valid = false;
     } else if (pw.length < 6) {
-      showFieldError('pw-err', 'Password must be at least 6 characters.');
-      valid = false;
+      showFieldError('pw-err', 'Password must be at least 6 characters.'); valid = false;
     }
-
     if (!valid) return;
 
     // Loading state
-    document.getElementById('login-btn-label').style.display  = 'none';
+    document.getElementById('login-btn-label').style.display   = 'none';
     document.getElementById('login-btn-loading').style.display = 'inline-flex';
     document.getElementById('login-btn').disabled = true;
 
-    // Demo auth simulation (1.2s delay)
-    setTimeout(() => {
-      // DEMO credentials
-      const DEMO_EMAIL = 'demo@ailink.io';
-      const DEMO_PW    = 'Demo1234!';
+    setTimeout(function() {
+      var DEMO_EMAIL = 'demo@ailink.io';
+      var DEMO_PW    = 'Demo1234!';
 
       if (email === DEMO_EMAIL && pw === DEMO_PW) {
-        // Save session
-        sessionStorage.setItem('ailink_user', JSON.stringify({
+        saveUserAndRedirect({
           email: email,
           name: 'AILINK Demo User',
           wallet: '0x742d35Cc6634C0532925a3b844Bc454e4438F4e2',
           loginAt: Date.now(),
           type: 'email'
-        }));
-        showSuccessAndRedirect('Login successful! Redirecting to dashboard...');
+        });
       } else if (email !== DEMO_EMAIL) {
-        // Non-demo email — simulate "account not found"
         resetLoginBtn();
-        showBanner('No account found with that email. Try the demo account or sign up.');
+        showBanner('No account found. Try demo@ailink.io / Demo1234!');
         document.getElementById('email-input').style.borderColor = 'rgba(255,80,80,0.5)';
       } else {
-        // Wrong password
         resetLoginBtn();
         showFieldError('pw-err', 'Incorrect password. Hint: Demo1234!');
         document.getElementById('pw-input').style.borderColor = 'rgba(255,80,80,0.5)';
@@ -294,87 +289,82 @@ export function loginPage(): string {
   }
 
   function resetLoginBtn() {
-    document.getElementById('login-btn-label').style.display  = 'inline';
+    document.getElementById('login-btn-label').style.display   = 'inline';
     document.getElementById('login-btn-loading').style.display = 'none';
     document.getElementById('login-btn').disabled = false;
   }
 
   // ── Wallet Connect ────────────────────────────────────────────
   function connectWallet(name) {
-    document.getElementById('wallet-list').style.display = 'none';
+    document.getElementById('wallet-list').style.display    = 'none';
     document.getElementById('network-notice').style.display = 'none';
     document.getElementById('wc-label').textContent = 'Connecting to ' + name + '...';
     document.getElementById('wallet-connecting').style.display = 'block';
 
-    // Simulate wallet handshake (2s)
-    setTimeout(() => {
-      // Generate mock wallet address
-      const addr = '0x' + Array.from({length:40}, () => '0123456789abcdef'[Math.floor(Math.random()*16)]).join('');
-      const shortAddr = addr.slice(0,6) + '...' + addr.slice(-4);
-
-      sessionStorage.setItem('ailink_user', JSON.stringify({
+    setTimeout(function() {
+      var addr = '0x' + Array.from({length:40}, function(){ return '0123456789abcdef'[Math.floor(Math.random()*16)]; }).join('');
+      saveUserAndRedirect({
         email: '',
-        name: shortAddr,
+        name: addr.slice(0,6) + '...' + addr.slice(-4),
         wallet: addr,
         loginAt: Date.now(),
         type: 'wallet',
         walletProvider: name
-      }));
-      showSuccessAndRedirect('Wallet connected! Redirecting to dashboard...');
+      });
     }, 2000);
   }
 
-  // ── OAuth (placeholder) ───────────────────────────────────────
+  // ── OAuth ─────────────────────────────────────────────────────
   function handleOAuth(provider) {
-    document.getElementById('login-btn') && (document.getElementById('login-btn').disabled = true);
     showToast('Connecting ' + provider + '...', 'fas fa-spinner fa-spin', 'var(--mint)');
-    setTimeout(() => {
+    setTimeout(function() {
       showToast(provider + ' OAuth launches at TGE (Q4 2025)', 'fas fa-clock', '#FFB400');
     }, 1500);
   }
 
-  // ── Success redirect ──────────────────────────────────────────
-  function showSuccessAndRedirect(msg) {
-    document.getElementById('panel-wallet').style.display = 'none';
-    document.getElementById('panel-email').style.display  = 'none';
-    document.getElementById('tab-bar').style.display      = 'none';
+  // ── Save to localStorage & redirect ──────────────────────────
+  function saveUserAndRedirect(user) {
+    try {
+      localStorage.setItem('ailink_user', JSON.stringify(user));
+    } catch(e) {}
 
-    const card = document.querySelector('.glass-card');
-    card.innerHTML = \`
-      <div style="text-align:center;padding:28px 0;">
-        <div style="width:64px;height:64px;background:rgba(49,242,195,0.12);border:2px solid var(--mint);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;animation:pulse-glow 2s ease-in-out infinite;">
-          <i class="fas fa-check" style="color:var(--mint);font-size:26px;"></i>
-        </div>
-        <h3 style="font-size:20px;font-weight:800;font-family:'Manrope',sans-serif;color:#fff;margin-bottom:8px;">Logged In!</h3>
-        <p style="font-size:13px;color:var(--text-muted);">Redirecting to your dashboard...</p>
-        <div style="margin-top:18px;height:3px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;">
-          <div id="redirect-bar" style="height:100%;width:0%;background:linear-gradient(90deg,#003BFF,#31F2C3);border-radius:2px;transition:width 1.4s ease;"></div>
-        </div>
-      </div>
-    \`;
-    setTimeout(() => { document.getElementById('redirect-bar').style.width = '100%'; }, 50);
-    setTimeout(() => { window.location.href = '/mypage'; }, 1600);
+    // Show success UI
+    var card = document.getElementById('login-card');
+    document.getElementById('tab-bar').style.display = 'none';
+    card.innerHTML =
+      '<div style="text-align:center;padding:32px 0;">' +
+        '<div style="width:64px;height:64px;background:rgba(49,242,195,0.12);border:2px solid var(--mint);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;">' +
+          '<i class="fas fa-check" style="color:var(--mint);font-size:26px;"></i>' +
+        '</div>' +
+        '<h3 style="font-size:20px;font-weight:800;font-family:Manrope,sans-serif;color:#fff;margin-bottom:8px;">Logged In!</h3>' +
+        '<p style="font-size:13px;color:var(--text-muted);">Redirecting to your dashboard...</p>' +
+        '<div style="margin-top:20px;height:3px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;">' +
+          '<div id="rbar" style="height:100%;width:0%;background:linear-gradient(90deg,#003BFF,#31F2C3);border-radius:2px;transition:width 1.5s ease;"></div>' +
+        '</div>' +
+      '</div>';
+    setTimeout(function(){ document.getElementById('rbar').style.width = '100%'; }, 50);
+    setTimeout(function(){ window.location.href = '/mypage'; }, 1700);
   }
 
   // ── Toast ─────────────────────────────────────────────────────
   function showToast(msg, icon, color) {
-    let toast = document.getElementById('__toast');
+    var toast = document.getElementById('__toast');
     if (!toast) {
       toast = document.createElement('div');
       toast.id = '__toast';
       toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#161920;border:1px solid rgba(49,242,195,0.2);border-radius:12px;padding:13px 20px;font-size:13px;color:#fff;display:flex;align-items:center;gap:10px;z-index:9999;white-space:nowrap;transition:transform 0.4s ease;';
       document.body.appendChild(toast);
     }
-    toast.innerHTML = \`<i class="\${icon}" style="color:\${color};"></i> <span>\${msg}</span>\`;
+    toast.innerHTML = '<i class="' + icon + '" style="color:' + color + ';"></i> <span>' + msg + '</span>';
     toast.style.transform = 'translateX(-50%) translateY(0)';
     clearTimeout(toast._t);
-    toast._t = setTimeout(() => { toast.style.transform = 'translateX(-50%) translateY(80px)'; }, 3200);
+    toast._t = setTimeout(function(){ toast.style.transform = 'translateX(-50%) translateY(80px)'; }, 3200);
   }
 
   // ── Password toggle ───────────────────────────────────────────
   function togglePw() {
-    const inp = document.getElementById('pw-input');
-    const btn = document.getElementById('pw-toggle');
+    var inp = document.getElementById('pw-input');
+    var btn = document.getElementById('pw-toggle');
     if (inp.type === 'password') {
       inp.type = 'text';
       btn.innerHTML = '<i class="fas fa-eye-slash"></i>';
@@ -384,16 +374,11 @@ export function loginPage(): string {
     }
   }
 
-  // ── Auto-redirect if already logged in ───────────────────────
-  window.addEventListener('DOMContentLoaded', () => {
-    const user = sessionStorage.getItem('ailink_user');
-    if (user) {
-      window.location.href = '/mypage';
-    }
-    // Clear field error on input
-    ['email-input','pw-input'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.addEventListener('input', () => {
+  // ── Clear field errors on input ───────────────────────────────
+  document.addEventListener('DOMContentLoaded', function() {
+    ['email-input','pw-input'].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.addEventListener('input', function() {
         el.style.borderColor = 'rgba(255,255,255,0.1)';
         clearFieldError(id === 'email-input' ? 'email-err' : 'pw-err');
         document.getElementById('login-error').style.display = 'none';

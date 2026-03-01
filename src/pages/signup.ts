@@ -275,7 +275,7 @@ export function signupPage(): string {
       const mockWallet = '0x' + Array.from({length:40}, () => '0123456789abcdef'[Math.floor(Math.random()*16)]).join('');
 
       // Save user to sessionStorage
-      sessionStorage.setItem('ailink_user', JSON.stringify({
+      localStorage.setItem('ailink_user', JSON.stringify({
         email: email,
         name: name,
         wallet: mockWallet,
@@ -306,7 +306,7 @@ export function signupPage(): string {
 
   // ── Auto-redirect if already logged in ────────────────────────
   window.addEventListener('DOMContentLoaded', () => {
-    if (sessionStorage.getItem('ailink_user')) {
+    if (localStorage.getItem('ailink_user')) {
       window.location.href = '/mypage';
     }
     // Clear error on input change
