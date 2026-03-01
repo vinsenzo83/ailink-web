@@ -299,9 +299,9 @@ export function homePage(): string {
           <div style="display:flex;flex-direction:column;gap:9px;">
             ${[
               {cat:'Ecosystem Rewards',pct:45,color:'#003BFF',amount:'9.0B'},
-              {cat:'Team & Contributors',pct:15,color:'#31F2C3',amount:'3.0B'},
-              {cat:'Partnerships & Expansion',pct:15,color:'#8B5CF6',amount:'3.0B'},
-              {cat:'Private Sale (Strategic)',pct:15,color:'#FFB400',amount:'3.0B'},
+              {cat:'Team & Advisors',pct:15,color:'#31F2C3',amount:'3.0B'},
+              {cat:'Partnerships & Marketing',pct:15,color:'#8B5CF6',amount:'3.0B'},
+              {cat:'Private Sale',pct:15,color:'#FFB400',amount:'3.0B'},
               {cat:'Protocol Reserve',pct:10,color:'#FF6B6B',amount:'2.0B'},
             ].map(a=>`
             <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:11px;padding:12px 16px;">
@@ -340,10 +340,10 @@ export function homePage(): string {
                 </tr></thead>
                 <tbody>
                   ${[
-                    {cat:'Ecosystem',col:'#003BFF',tge:'TGE 5%',cliff:'0 mo',vest:'48 mo'},
+                    {cat:'Ecosystem',col:'#003BFF',tge:'150M',cliff:'—',vest:'48 mo'},
                     {cat:'Team',col:'#31F2C3',tge:'—',cliff:'12 mo',vest:'36 mo'},
-                    {cat:'Partnerships',col:'#8B5CF6',tge:'TGE 5%',cliff:'3 mo',vest:'30 mo'},
-                    {cat:'Private Sale',col:'#FFB400',tge:'TGE 15%',cliff:'6 mo',vest:'18 mo'},
+                    {cat:'Partnerships',col:'#8B5CF6',tge:'—',cliff:'3 mo',vest:'30 mo'},
+                    {cat:'Private Sale',col:'#FFB400',tge:'—',cliff:'6 mo',vest:'18 mo'},
                     {cat:'Reserve',col:'#FF6B6B',tge:'—',cliff:'6 mo',vest:'48 mo'},
                   ].map(r=>`
                   <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
@@ -371,34 +371,6 @@ export function homePage(): string {
           </div>
         </div>
         <canvas id="vestingChart" height="80"></canvas>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider"></div>
-
-  <!-- ===== LIVE STATS ===== -->
-  <section id="stats" class="section observe" style="background:rgba(0,59,255,0.03);">
-    <div class="section-inner">
-      <div style="text-align:center;max-width:600px;margin:0 auto 52px;">
-        <div class="section-label"><i class="fas fa-chart-bar"></i>&nbsp; Live Network Stats</div>
-        <h2 class="section-title">Network <span class="gradient-text">At a Glance</span></h2>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;" id="stats-grid">
-        ${[
-          {icon:'fas fa-users',color:'#31F2C3',val:'—',label:'Total Holders',sub:'Growing daily'},
-          {icon:'fas fa-cubes',color:'#003BFF',val:'0',label:'NFTs Minted',sub:'Beta launch Q4 2025'},
-          {icon:'fas fa-fire',color:'#FFB400',val:'20B',label:'Max Total Supply',sub:'ALINK BEP-20'},
-          {icon:'fas fa-shield-check',color:'#8B5CF6',val:'Verified',label:'Contract Status',sub:'Source code on BscScan'},
-        ].map(s=>`
-        <div class="glass-card observe" style="padding:28px;text-align:center;">
-          <div style="width:52px;height:52px;background:${s.color}15;border:1px solid ${s.color}30;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
-            <i class="${s.icon}" style="font-size:20px;color:${s.color};"></i>
-          </div>
-          <div style="font-size:26px;font-weight:900;font-family:'Manrope',sans-serif;color:#fff;margin-bottom:5px;">${s.val}</div>
-          <div style="font-size:14px;font-weight:600;color:#fff;margin-bottom:4px;">${s.label}</div>
-          <div style="font-size:11px;color:var(--text-muted);">${s.sub}</div>
-        </div>`).join('')}
       </div>
     </div>
   </section>
@@ -699,7 +671,7 @@ export function homePage(): string {
 
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:40px;" id="stats-grid">
         ${[
-          {icon:'fas fa-users',color:'#31F2C3',val:'15,000+',label:'Early Community',sub:'Waitlist members',trend:'+1,200 this week'},
+          {icon:'fas fa-users',color:'#31F2C3',val:'15K+',label:'Early Community',sub:'Waitlist members',trend:'+1,200 this week'},
           {icon:'fas fa-coins',color:'#003BFF',val:'10B',label:'Total Supply',sub:'ALINK tokens',trend:'BEP-20 on BNB Chain'},
           {icon:'fas fa-layer-group',color:'#FFB400',val:'5',label:'Allocation Pools',sub:'Vesting schedules',trend:'Up to 48-month vest'},
           {icon:'fas fa-shield-alt',color:'#8B5CF6',val:'Q4 2025',label:'TGE Target',sub:'DEX listing',trend:'PancakeSwap first'},

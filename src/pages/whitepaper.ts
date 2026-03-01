@@ -117,7 +117,7 @@ export function whitepaperPage(): string {
             ${[
               {label:'Token Name', val:'AILINK'},
               {label:'Ticker', val:'ALINK'},
-              {label:'Total Supply', val:'10,000,000,000'},
+              {label:'Total Supply', val:'20,000,000,000'},
               {label:'Network', val:'BNB Chain'},
               {label:'Standard', val:'BEP-20'},
               {label:'TGE', val:'Q4 2025'},
@@ -140,11 +140,11 @@ export function whitepaperPage(): string {
             </thead>
             <tbody>
               ${[
-                {cat:'Ecosystem Rewards', pct:'45%', tok:'4,500,000,000', tge:'150M', cliff:'0 mo', vest:'48 mo', col:'#003BFF'},
-                {cat:'Team & Contributors', pct:'15%', tok:'1,500,000,000', tge:'—', cliff:'12 mo', vest:'36 mo', col:'#31F2C3'},
-                {cat:'Partnerships & Expansion', pct:'15%', tok:'1,500,000,000', tge:'75M', cliff:'3 mo', vest:'30 mo', col:'#8B5CF6'},
-                {cat:'Private Sale (Strategic)', pct:'15%', tok:'1,500,000,000', tge:'225M', cliff:'6 mo', vest:'18 mo', col:'#FFB400'},
-                {cat:'Protocol Reserve', pct:'10%', tok:'1,000,000,000', tge:'—', cliff:'6 mo', vest:'48 mo', col:'#FF6B6B'},
+                {cat:'Ecosystem Rewards', pct:'45%', tok:'9,000,000,000', tge:'300M', cliff:'—', vest:'48 mo', col:'#003BFF'},
+                {cat:'Team & Advisors', pct:'15%', tok:'3,000,000,000', tge:'—', cliff:'12 mo', vest:'36 mo', col:'#31F2C3'},
+                {cat:'Partnerships & Marketing', pct:'15%', tok:'3,000,000,000', tge:'—', cliff:'3 mo', vest:'30 mo', col:'#8B5CF6'},
+                {cat:'Private Sale', pct:'15%', tok:'3,000,000,000', tge:'—', cliff:'6 mo', vest:'18 mo', col:'#FFB400'},
+                {cat:'Protocol Reserve', pct:'10%', tok:'2,000,000,000', tge:'—', cliff:'6 mo', vest:'48 mo', col:'#FF6B6B'},
               ].map((r,i) => `
               <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
                 <td style="padding:12px;"><div style="display:flex;align-items:center;gap:8px;"><div style="width:8px;height:8px;background:${r.col};border-radius:2px;"></div><span style="color:#fff;font-weight:500;">${r.cat}</span></div></td>

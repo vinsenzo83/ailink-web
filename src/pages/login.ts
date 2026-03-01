@@ -82,7 +82,7 @@ export function loginPage(): string {
               <label style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.8px;display:block;margin-bottom:8px;">Email Address</label>
               <div style="position:relative;">
                 <i class="fas fa-envelope" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-dim);font-size:14px;"></i>
-                <input type="email" id="email-input" placeholder="you@example.com" required style="width:100%;padding:13px 14px 13px 40px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:#fff;font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s;box-sizing:border-box;"
+                <input type="email" id="email-input" placeholder="you@example.com" required autocomplete="email" style="width:100%;padding:13px 14px 13px 40px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:#fff;font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s;box-sizing:border-box;"
                   onfocus="this.style.borderColor='rgba(49,242,195,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'" />
               </div>
             </div>
@@ -90,7 +90,7 @@ export function loginPage(): string {
               <label style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.8px;display:block;margin-bottom:8px;">Password</label>
               <div style="position:relative;">
                 <i class="fas fa-lock" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-dim);font-size:14px;"></i>
-                <input type="password" id="pw-input" placeholder="Enter your password" required style="width:100%;padding:13px 14px 13px 40px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:#fff;font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s;box-sizing:border-box;"
+                <input type="password" id="pw-input" placeholder="Enter your password" required autocomplete="current-password" style="width:100%;padding:13px 14px 13px 40px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:#fff;font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.2s;box-sizing:border-box;"
                   onfocus="this.style.borderColor='rgba(49,242,195,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.1)'" />
                 <button type="button" onclick="togglePw()" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-dim);" id="pw-toggle"><i class="fas fa-eye"></i></button>
               </div>

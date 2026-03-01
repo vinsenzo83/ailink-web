@@ -197,7 +197,7 @@ export function termsPage(): string {
     <h2 class="legal-h2"><i class="fas fa-coins" style="color:#6B8FFF;font-size:16px;"></i> 4. ALINK Token & Tokenomics</h2>
     <p class="legal-p">The ALINK token is a <span class="legal-highlight">utility token</span> designed for use within the AILINK ecosystem:</p>
     <ul class="legal-ul">
-      <li>Total supply: 10,000,000,000 ALINK (10 Billion)</li>
+      <li>Total supply: 20,000,000,000 ALINK (20 Billion)</li>
       <li>Network: BNB Chain (BEP-20 standard)</li>
       <li>TGE (Token Generation Event) scheduled for Q4 2025</li>
       <li>Vesting schedules apply to all allocation categories — see full schedule at <a href="/vesting" class="legal-link">/vesting</a></li>

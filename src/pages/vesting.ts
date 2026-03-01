@@ -9,9 +9,9 @@ const CATEGORIES = [
     id: 'ecosystem',
     name: 'Ecosystem Rewards',
     color: '#31F2C3',
-    total: 4_500_000_000,
+    total: 9_000_000_000,
     pct: 45,
-    tge: 150_000_000,
+    tge: 300_000_000,
     cliff: 0,
     vestMonths: 48,
     description: 'Rewards distributed to platform users, game participants, AI content creators, and stakers.',
@@ -21,7 +21,7 @@ const CATEGORIES = [
     id: 'team',
     name: 'Team & Advisors',
     color: '#6B8FFF',
-    total: 1_500_000_000,
+    total: 3_000_000_000,
     pct: 15,
     tge: 0,
     cliff: 12,
@@ -33,7 +33,7 @@ const CATEGORIES = [
     id: 'partnerships',
     name: 'Partnerships & Marketing',
     color: '#003BFF',
-    total: 1_500_000_000,
+    total: 3_000_000_000,
     pct: 15,
     tge: 0,
     cliff: 3,
@@ -45,7 +45,7 @@ const CATEGORIES = [
     id: 'private',
     name: 'Private Sale',
     color: '#FFB400',
-    total: 1_500_000_000,
+    total: 3_000_000_000,
     pct: 15,
     tge: 0,
     cliff: 6,
@@ -57,7 +57,7 @@ const CATEGORIES = [
     id: 'reserve',
     name: 'Protocol Reserve',
     color: '#FF6B9D',
-    total: 1_000_000_000,
+    total: 2_000_000_000,
     pct: 10,
     tge: 0,
     cliff: 6,
@@ -124,7 +124,7 @@ function buildMonthlyTable(cat: typeof CATEGORIES[0]): string {
 }
 
 export function vestingPage(): string {
-  const totalSupply = 10_000_000_000
+  const totalSupply = 20_000_000_000
   const tgeTotal = CATEGORIES.reduce((s, c) => s + c.tge, 0)
 
   const content = `
