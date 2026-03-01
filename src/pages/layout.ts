@@ -378,9 +378,11 @@ export function layout(title: string, content: string, extraHead: string = ''): 
             <i class="fab fa-telegram"></i>
           </a>
         </div>
-        <a href="/login" class="btn-primary" style="padding:10px 20px;font-size:13px;">
-          <i class="fas fa-user"></i> Sign In
-        </a>
+        <div id="nav-auth-btn">
+          <a href="/login" class="btn-primary" style="padding:10px 20px;font-size:13px;">
+            <i class="fas fa-user"></i> Sign In
+          </a>
+        </div>
       </div>
 
       <div class="hamburger" id="hamburger" onclick="toggleMenu()">
@@ -398,7 +400,8 @@ export function layout(title: string, content: string, extraHead: string = ''): 
     <a href="/#team" onclick="toggleMenu()">Team</a>
     <a href="/whitepaper" onclick="toggleMenu()">Whitepaper</a>
     <a href="/vesting" onclick="toggleMenu()">Vesting</a>
-    <a href="/login" onclick="toggleMenu()">Sign In</a>
+    <a href="/login" id="mobile-signin-link" onclick="toggleMenu()">Sign In</a>
+    <a href="/mypage" id="mobile-mypage-link" onclick="toggleMenu()" style="display:none;">My Dashboard</a>
     <div style="display:flex;gap:10px;padding:8px 16px;margin-top:8px;">
       <a href="https://x.com/AiLink_Official" target="_blank" class="btn-ghost" style="flex:1;justify-content:center;">
         <i class="fab fa-x-twitter"></i> X / Twitter
@@ -407,9 +410,11 @@ export function layout(title: string, content: string, extraHead: string = ''): 
         <i class="fab fa-telegram"></i> Telegram
       </a>
     </div>
-    <a href="/login" class="btn-primary" style="margin:8px 16px;justify-content:center;">
-      <i class="fas fa-user"></i> Sign In
-    </a>
+    <div id="mobile-auth-btn">
+      <a href="/login" class="btn-primary" style="margin:8px 16px;justify-content:center;">
+        <i class="fas fa-user"></i> Sign In
+      </a>
+    </div>
   </div>
 
   <!-- MAIN CONTENT -->
@@ -525,6 +530,46 @@ export function layout(title: string, content: string, extraHead: string = ''): 
       el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
       observer.observe(el);
     });
+
+    // ── 로그인 상태에 따라 navbar 버튼 교체 ──────────────────────
+    (function() {
+      try {
+        var u = localStorage.getItem('ailink_user');
+        if (u && JSON.parse(u)) {
+          var user = JSON.parse(u);
+          var displayName = user.name || user.email || 'My Page';
+          var shortName = displayName.length > 12 ? displayName.slice(0,10) + '…' : displayName;
+
+          // 데스크탑 버튼 교체
+          var navBtn = document.getElementById('nav-auth-btn');
+          if (navBtn) {
+            navBtn.innerHTML =
+              '<div style="display:flex;align-items:center;gap:8px;">'+
+              '  <a href="/mypage" class="btn-primary" style="padding:9px 16px;font-size:13px;">'+
+              '    <i class="fas fa-user-check"></i> '+shortName+
+              '  </a>'+
+              '  <a href="/logout" title="Logout" style="padding:9px 12px;border-radius:10px;background:rgba(255,80,80,0.1);border:1px solid rgba(255,80,80,0.25);color:#FF8080;font-size:13px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:all .2s;" onmouseover="this.style.background=\'rgba(255,80,80,0.2)\'" onmouseout="this.style.background=\'rgba(255,80,80,0.1)\'">'+
+              '    <i class="fas fa-sign-out-alt"></i>'+
+              '  </a>'+
+              '</div>';
+          }
+
+          // 모바일 메뉴
+          var mSignin = document.getElementById('mobile-signin-link');
+          var mMypage = document.getElementById('mobile-mypage-link');
+          if (mSignin) mSignin.style.display = 'none';
+          if (mMypage) mMypage.style.display = 'block';
+
+          var mAuthBtn = document.getElementById('mobile-auth-btn');
+          if (mAuthBtn) {
+            mAuthBtn.innerHTML =
+              '<a href="/logout" class="btn-ghost" style="margin:8px 16px;justify-content:center;color:#FF8080;border-color:rgba(255,80,80,0.3);">'+
+              '  <i class="fas fa-sign-out-alt"></i> Logout'+
+              '</a>';
+          }
+        }
+      } catch(e) {}
+    })();
   </script>
 </body>
 </html>`
