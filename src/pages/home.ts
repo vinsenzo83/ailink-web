@@ -113,38 +113,6 @@ export function homePage(): string {
     </div>
   </section>
 
-  <!-- ===== BRAND ASSETS DOWNLOAD ===== -->
-  <section style="padding:18px 0;background:rgba(49,242,195,0.03);border-bottom:1px solid rgba(49,242,195,0.1);">
-    <div class="section-inner">
-      <div style="display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <img src="/static/logo-icon.svg" alt="AILINK Logo" style="width:30px;height:30px;"/>
-          <div>
-            <div style="font-size:11px;font-weight:700;color:var(--mint);text-transform:uppercase;letter-spacing:1.5px;">Brand Assets</div>
-            <div style="font-size:10px;color:var(--text-muted);">Official logo kit — SVG format</div>
-          </div>
-        </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <a href="/static/logo-square.svg" download="ailink-logo-square.svg"
-             style="display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--mint);border:1px solid rgba(49,242,195,0.3);border-radius:6px;padding:6px 12px;text-decoration:none;transition:all 0.2s;background:rgba(49,242,195,0.04);"
-             onmouseover="this.style.background='rgba(49,242,195,0.12)'" onmouseout="this.style.background='rgba(49,242,195,0.04)'">
-            <i class="fas fa-download" style="font-size:10px;"></i> 1:1 Square
-          </a>
-          <a href="/static/logo-horizontal.svg" download="ailink-logo-horizontal.svg"
-             style="display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--mint);border:1px solid rgba(49,242,195,0.3);border-radius:6px;padding:6px 12px;text-decoration:none;transition:all 0.2s;background:rgba(49,242,195,0.04);"
-             onmouseover="this.style.background='rgba(49,242,195,0.12)'" onmouseout="this.style.background='rgba(49,242,195,0.04)'">
-            <i class="fas fa-download" style="font-size:10px;"></i> Horizontal
-          </a>
-          <a href="/static/logo-icon.svg" download="ailink-logo-icon.svg"
-             style="display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--mint);border:1px solid rgba(49,242,195,0.3);border-radius:6px;padding:6px 12px;text-decoration:none;transition:all 0.2s;background:rgba(49,242,195,0.04);"
-             onmouseover="this.style.background='rgba(49,242,195,0.12)'" onmouseout="this.style.background='rgba(49,242,195,0.04)'">
-            <i class="fas fa-download" style="font-size:10px;"></i> Icon
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- ===== TRUST BAR ===== -->
   <section style="padding:26px 0;background:rgba(255,255,255,0.02);border-bottom:1px solid var(--border);">
     <div class="section-inner">
