@@ -2,56 +2,51 @@
 
 **Project Name:** AILINK  
 **Code Name:** ailink-web  
-**Version:** v1.0.0  
-**Status:** ✅ Active — Development  
+**Version:** v2.0.0  
+**Status:** ✅ Active — Production Live  
 
 ---
 
-## 🚀 Project Overview
-
-**AILINK** is an intelligent, decentralized interaction network that merges AI-powered content creation with accessible Web3 engagement. Designed for speed, simplicity, and ownership.
-
-**Core Slogans:**
-- *"Intelligence, Connected."*
-- *"Build. Link. Empower."*
-- *"AI Network for the Next Web."*
-- *"Where Users Shape the Algorithm."*
-
----
-
-## 🌐 URLs
+## 🌐 Live URLs
 
 | Type | URL |
 |---|---|
-| **Live Sandbox** | https://3000-ifclimfdh50ocesbammad-cbeee0f9.sandbox.novita.ai |
+| **Production (Cloudflare Pages)** | https://ailink-web.pages.dev |
+| **Sandbox (Dev)** | https://3000-ifclimfdh50ocesbammad-cbeee0f9.sandbox.novita.ai |
+| **GitHub** | https://github.com/vinsenzo83/ailink-web |
 | **X / Twitter** | https://x.com/AiLink_Official |
 | **Telegram** | https://t.me/AiLink_Official |
+| **BSCScan (Contract)** | https://bscscan.com/token/0x33c5502261c589a2EC4B1a6C4350aBF60ef47254 |
 
 ---
 
-## 📄 Pages
+## 📄 Pages (10 routes)
 
-| Page | Route | Description |
+| Page | Route | Status |
 |---|---|---|
-| Home | `/` | Full landing page with all sections |
-| Whitepaper | `/whitepaper` | Full technical & economic whitepaper v1.1 |
-| Health Check | `/api/health` | API status endpoint |
+| Home | `/` | ✅ Live |
+| Whitepaper | `/whitepaper` | ✅ Live |
+| Login | `/login` | ✅ Live |
+| Sign Up | `/signup` | ✅ Live |
+| My Dashboard | `/mypage` | ✅ Live |
+| Vesting Schedule | `/vesting` | ✅ Live |
+| Privacy Policy | `/legal/privacy` | ✅ Live |
+| Terms of Service | `/legal/terms` | ✅ Live |
+| Disclaimer | `/legal/disclaimer` | ✅ Live |
+| Logout | `/logout` | ✅ Live |
 
 ---
 
-## 🏠 Homepage Sections (14 total)
+## 🔐 Login (Demo Mode)
 
-1. **Hero** — Main banner with live activity feed card, stats row, CTA buttons
-2. **Trust Bar** — 6-column quick stats (AI Engine, Micro-Games, AI Media, 10B supply, DAO, BNB Chain)
-3. **Features** — 6 feature cards (Micro-Games, AI Media Suite, Point System, NFT Minting, Rewards, DAO)
-4. **Ecosystem** — 4-step flow diagram + 4 ecosystem pillars
-5. **Tokenomics** — Token info grid, 5-category allocation bars, donut chart
-6. **Vesting Table** — Allocation table (TGE/Cliff/Vesting) per category
-7. **Vesting Chart** — 60-month cumulative supply line chart (Month 1 → 53 → 100%)
-8. **Roadmap** — 4 phases (Q3 2025 ✅ → Q4 2025 🔄 → 2026 → 2027+)
-9. **Team** — 3 core members + full team structure
-10. **Partners** — 8 partner cards (BNB Chain, Chainlink, OKX, Google Cloud, RunwayML, CertiK, AWS, Stability AI)
-11. **CTA** — Final call-to-action section
+| Method | Credentials |
+|---|---|
+| **Email** | `demo@ailink.io` / `Demo1234!` |
+| **Wallet** | MetaMask / Trust Wallet / WalletConnect / OKX (시뮬레이션) |
+
+- 로그인 후 navbar → **My Page + Logout** 버튼으로 자동 전환
+- `localStorage` 기반 세션 유지 (브라우저 닫아도 유지)
+- Full auth는 TGE (Q4 2025) 런칭 예정
 
 ---
 
@@ -61,115 +56,58 @@
 |---|---|
 | Token Name | AILINK |
 | Ticker | ALINK |
-| Total Supply | 10,000,000,000 |
-| Network | BNB Chain |
-| Standard | BEP-20 |
+| Total Supply | 20,000,000,000 |
+| Network | BNB Chain (BEP-20) |
+| Contract | 0x33c5502261c589a2EC4B1a6C4350aBF60ef47254 |
 | TGE | Q4 2025 |
 
 | Category | % | Tokens | TGE | Cliff | Vesting |
 |---|---|---|---|---|---|
-| Ecosystem Rewards | 45% | 4.5B | 150M | 0 mo | 48 mo |
-| Team & Contributors | 15% | 1.5B | — | 12 mo | 36 mo |
-| Partnerships & Expansion | 15% | 1.5B | 75M | 3 mo | 30 mo |
-| Private Sale (Strategic) | 15% | 1.5B | 225M | 6 mo | 18 mo |
-| Protocol Reserve | 10% | 1.0B | — | 6 mo | 48 mo |
-
-Vesting completes at **Month 53 (100%)**.
-
----
-
-## 👥 Core Team
-
-| Name | Role | Background |
-|---|---|---|
-| Alex Kim | CEO & Co-Founder | 8+ years blockchain product development |
-| Sophia Nguyen | CTO & Co-Founder | 10+ years AI systems engineering |
-| Daniel Park | CMO | GameFi/SocialFi growth strategist |
-
----
-
-## 🤝 Partners & Investors
-
-BNB Chain · Chainlink · OKX Web3 · Google Cloud AI · RunwayML · CertiK · AWS ML · Stability AI
-
----
-
-## 🎨 Brand Identity
-
-| Element | Value |
-|---|---|
-| Primary Color | Deep Tech Blue `#003BFF` |
-| Secondary Color | Cyber Mint Green `#31F2C3` |
-| Background | Dark Graphite `#0D0F14` |
-| Fonts | Inter, Manrope |
-
----
-
-## 🗂️ Project Structure
-
-```
-ailink-web/
-├── src/
-│   ├── index.tsx          # Hono app entry (routes)
-│   └── pages/
-│       ├── layout.ts      # HTML layout, navbar, footer, global CSS
-│       ├── home.ts        # Full homepage (all 11 sections)
-│       └── whitepaper.ts  # Whitepaper v1.1 page
-├── public/
-│   └── static/
-│       └── favicon.svg    # AILINK favicon
-├── dist/                  # Build output
-├── ecosystem.config.cjs   # PM2 config
-├── wrangler.jsonc         # Cloudflare config
-├── vite.config.ts         # Vite build config
-└── package.json
-```
+| Ecosystem Rewards | 45% | 9B | 300M | 0 mo | 48 mo |
+| Team & Advisors | 15% | 3B | — | 12 mo | 36 mo |
+| Partnerships & Marketing | 15% | 3B | — | 3 mo | 30 mo |
+| Private Sale | 15% | 3B | 450M | 6 mo | 18 mo |
+| Protocol Reserve | 10% | 2B | — | 6 mo | 48 mo |
 
 ---
 
 ## 🛠️ Tech Stack
 
 - **Framework:** Hono v4 (Cloudflare Workers)
-- **Build:** Vite + @hono/vite-build
+- **Build:** Vite + @hono/vite-cloudflare-pages
 - **Runtime:** Cloudflare Pages (Edge)
-- **Frontend:** Tailwind CSS CDN, Chart.js, Font Awesome, Google Fonts (Inter, Manrope)
-- **Charts:** Chart.js (Donut tokenomics + Line vesting)
+- **Frontend:** Tailwind CSS CDN, Chart.js, Font Awesome 6.6, Google Fonts
+- **Auth:** localStorage 기반 데모 인증
+
+---
+
+## ☁️ Cloudflare Deployment
+
+| Item | Value |
+|---|---|
+| Platform | Cloudflare Pages |
+| Project Name | ailink-web |
+| Production Branch | main |
+| Build Command | `npm run build` |
+| Output Directory | `dist` |
+| URL | https://ailink-web.pages.dev |
+
+```bash
+# 배포 명령
+npm run build
+npx wrangler pages deploy dist --project-name ailink-web
+```
 
 ---
 
 ## 🚀 Development
 
 ```bash
-# Install
 npm install
-
-# Build
 npm run build
-
-# Start (PM2)
 pm2 start ecosystem.config.cjs
-
-# Deploy to Cloudflare
-npm run deploy
 ```
 
 ---
 
-## 📅 Roadmap
-
-| Phase | Period | Status |
-|---|---|---|
-| Foundation | Q3 2025 | ✅ Completed |
-| TGE Launch | Q4 2025 | 🔄 In Progress |
-| Expansion | 2026 | ⏳ Upcoming |
-| Decentralization | 2027+ | 🔮 Future |
-
----
-
-## ⚠️ Legal
-
-ALINK is a utility token, not an investment product. Does not represent equity or guaranteed returns. Users must comply with regional regulations. All smart contracts will undergo professional audits before mainnet deployment.
-
----
-
-*© 2025 AILINK. All rights reserved.*
+*© 2025 AILINK. All rights reserved. | Last updated: 2026-03-01 | v2.0.0*
