@@ -366,6 +366,7 @@ export function layout(title: string, content: string, extraHead: string = ''): 
         <a href="/#roadmap">Roadmap</a>
         <a href="/#team">Team</a>
         <a href="/whitepaper">Whitepaper</a>
+        <a href="/vesting">Vesting</a>
       </div>
 
       <div class="nav-cta">
@@ -377,8 +378,8 @@ export function layout(title: string, content: string, extraHead: string = ''): 
             <i class="fab fa-telegram"></i>
           </a>
         </div>
-        <a href="/#tokenomics" class="btn-primary" style="padding:10px 20px;font-size:13px;">
-          <i class="fas fa-rocket"></i> Launch App
+        <a href="/login" class="btn-primary" style="padding:10px 20px;font-size:13px;">
+          <i class="fas fa-user"></i> Sign In
         </a>
       </div>
 
@@ -396,6 +397,8 @@ export function layout(title: string, content: string, extraHead: string = ''): 
     <a href="/#roadmap" onclick="toggleMenu()">Roadmap</a>
     <a href="/#team" onclick="toggleMenu()">Team</a>
     <a href="/whitepaper" onclick="toggleMenu()">Whitepaper</a>
+    <a href="/vesting" onclick="toggleMenu()">Vesting</a>
+    <a href="/login" onclick="toggleMenu()">Sign In</a>
     <div style="display:flex;gap:10px;padding:8px 16px;margin-top:8px;">
       <a href="https://x.com/AiLink_Official" target="_blank" class="btn-ghost" style="flex:1;justify-content:center;">
         <i class="fab fa-x-twitter"></i> X / Twitter
@@ -404,8 +407,8 @@ export function layout(title: string, content: string, extraHead: string = ''): 
         <i class="fab fa-telegram"></i> Telegram
       </a>
     </div>
-    <a href="/#tokenomics" class="btn-primary" style="margin:8px 16px;justify-content:center;">
-      <i class="fas fa-rocket"></i> Launch App
+    <a href="/login" class="btn-primary" style="margin:8px 16px;justify-content:center;">
+      <i class="fas fa-user"></i> Sign In
     </a>
   </div>
 
@@ -459,10 +462,10 @@ export function layout(title: string, content: string, extraHead: string = ''): 
           <h4>Resources</h4>
           <ul>
             <li><a href="/whitepaper">Whitepaper</a></li>
-            <li><a href="#">Token Contract</a></li>
-            <li><a href="#">Audit Report</a></li>
-            <li><a href="#">Developer API</a></li>
-            <li><a href="#">Brand Kit</a></li>
+            <li><a href="/vesting">Vesting Schedule</a></li>
+            <li><a href="https://bscscan.com/token/0x33c5502261c589a2EC4B1a6C4350aBF60ef47254" target="_blank">Token Contract</a></li>
+            <li><a href="/legal/disclaimer">Legal Disclaimer</a></li>
+            <li><a href="/login">Dashboard</a></li>
           </ul>
         </div>
 
@@ -481,9 +484,9 @@ export function layout(title: string, content: string, extraHead: string = ''): 
       <div class="footer-bottom">
         <p>© 2025 AILINK. All rights reserved. ALINK is a utility token, not an investment.</p>
         <div style="display:flex;gap:20px;">
-          <a href="#" style="color:var(--text-dim);font-size:13px;text-decoration:none;">Privacy Policy</a>
-          <a href="#" style="color:var(--text-dim);font-size:13px;text-decoration:none;">Terms of Service</a>
-          <a href="#" style="color:var(--text-dim);font-size:13px;text-decoration:none;">Legal Disclaimer</a>
+          <a href="/legal/privacy" style="color:var(--text-dim);font-size:13px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--mint)'" onmouseout="this.style.color='var(--text-dim)'">Privacy Policy</a>
+          <a href="/legal/terms" style="color:var(--text-dim);font-size:13px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--mint)'" onmouseout="this.style.color='var(--text-dim)'">Terms of Service</a>
+          <a href="/legal/disclaimer" style="color:var(--text-dim);font-size:13px;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--mint)'" onmouseout="this.style.color='var(--text-dim)'">Legal Disclaimer</a>
         </div>
       </div>
     </div>
