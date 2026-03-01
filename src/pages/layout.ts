@@ -531,45 +531,54 @@ export function layout(title: string, content: string, extraHead: string = ''): 
       observer.observe(el);
     });
 
+  </script>
+
+  <script>
     // ── 로그인 상태에 따라 navbar 버튼 교체 ──────────────────────
-    (function() {
+    function updateNavAuth() {
       try {
-        var u = localStorage.getItem('ailink_user');
-        if (u && JSON.parse(u)) {
-          var user = JSON.parse(u);
-          var displayName = user.name || user.email || 'My Page';
-          var shortName = displayName.length > 12 ? displayName.slice(0,10) + '…' : displayName;
+        var raw = localStorage.getItem('ailink_user');
+        if (!raw) return;
+        var user = JSON.parse(raw);
+        if (!user) return;
 
-          // 데스크탑 버튼 교체
-          var navBtn = document.getElementById('nav-auth-btn');
-          if (navBtn) {
-            navBtn.innerHTML =
-              '<div style="display:flex;align-items:center;gap:8px;">'+
-              '  <a href="/mypage" class="btn-primary" style="padding:9px 16px;font-size:13px;">'+
-              '    <i class="fas fa-user-check"></i> '+shortName+
-              '  </a>'+
-              '  <a href="/logout" title="Logout" style="padding:9px 12px;border-radius:10px;background:rgba(255,80,80,0.1);border:1px solid rgba(255,80,80,0.25);color:#FF8080;font-size:13px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:all .2s;" onmouseover="this.style.background=\'rgba(255,80,80,0.2)\'" onmouseout="this.style.background=\'rgba(255,80,80,0.1)\'">'+
-              '    <i class="fas fa-sign-out-alt"></i>'+
-              '  </a>'+
-              '</div>';
-          }
+        var displayName = user.name || user.email || 'My Page';
+        var shortName = displayName.length > 14 ? displayName.slice(0,12) + '…' : displayName;
 
-          // 모바일 메뉴
-          var mSignin = document.getElementById('mobile-signin-link');
-          var mMypage = document.getElementById('mobile-mypage-link');
-          if (mSignin) mSignin.style.display = 'none';
-          if (mMypage) mMypage.style.display = 'block';
-
-          var mAuthBtn = document.getElementById('mobile-auth-btn');
-          if (mAuthBtn) {
-            mAuthBtn.innerHTML =
-              '<a href="/logout" class="btn-ghost" style="margin:8px 16px;justify-content:center;color:#FF8080;border-color:rgba(255,80,80,0.3);">'+
-              '  <i class="fas fa-sign-out-alt"></i> Logout'+
-              '</a>';
-          }
+        // 데스크탑 버튼 교체
+        var navBtn = document.getElementById('nav-auth-btn');
+        if (navBtn) {
+          navBtn.innerHTML =
+            '<div style="display:flex;align-items:center;gap:8px;">' +
+            '<a href="/mypage" class="btn-primary" style="padding:9px 16px;font-size:13px;">' +
+            '<i class="fas fa-user-check" style="margin-right:6px;"></i>' + shortName +
+            '</a>' +
+            '<a href="/logout" title="Logout" style="padding:9px 12px;border-radius:10px;background:rgba(255,80,80,0.1);border:1px solid rgba(255,80,80,0.3);color:#FF8080;font-size:13px;text-decoration:none;display:inline-flex;align-items:center;">' +
+            '<i class="fas fa-sign-out-alt"></i>' +
+            '</a>' +
+            '</div>';
         }
-      } catch(e) {}
-    })();
+
+        // 모바일 Sign In 링크 → My Dashboard
+        var mSignin = document.getElementById('mobile-signin-link');
+        var mMypage = document.getElementById('mobile-mypage-link');
+        if (mSignin) mSignin.style.display = 'none';
+        if (mMypage) mMypage.style.display = 'block';
+
+        // 모바일 Sign In 버튼 → Logout
+        var mAuthBtn = document.getElementById('mobile-auth-btn');
+        if (mAuthBtn) {
+          mAuthBtn.innerHTML =
+            '<a href="/logout" class="btn-ghost" style="margin:8px 16px;justify-content:center;color:#FF8080;border-color:rgba(255,80,80,0.3);">' +
+            '<i class="fas fa-sign-out-alt" style="margin-right:6px;"></i>Logout' +
+            '</a>';
+        }
+      } catch(e) { console.error('nav auth error:', e); }
+    }
+
+    // DOM 완료 후 + 즉시 실행 (둘 다)
+    updateNavAuth();
+    document.addEventListener('DOMContentLoaded', updateNavAuth);
   </script>
 </body>
 </html>`
