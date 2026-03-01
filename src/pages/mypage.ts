@@ -13,12 +13,12 @@ export function mypagePage(): string {
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:36px;">
         <div>
           <div class="section-label" style="margin-bottom:10px;"><i class="fas fa-user-circle"></i>&nbsp; My Dashboard</div>
-          <h1 style="font-size:clamp(26px,3vw,38px);font-weight:900;font-family:'Manrope',sans-serif;">Welcome, <span class="gradient-text">AILINK User</span></h1>
+          <h1 style="font-size:clamp(26px,3vw,38px);font-weight:900;font-family:'Manrope',sans-serif;">Welcome, <span class="gradient-text" id="user-greeting">AILINK User</span></h1>
           <p style="font-size:14px;color:var(--text-muted);margin-top:6px;">Manage your points, assets, vesting, and account settings</p>
         </div>
         <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
           <span class="badge badge-mint" style="padding:7px 14px;font-size:12px;"><span style="width:6px;height:6px;background:var(--mint);border-radius:50%;display:inline-block;animation:blink 2s infinite;margin-right:4px;"></span> BNB Chain</span>
-          <a href="/login" class="btn-ghost" style="font-size:13px;padding:10px 18px;"><i class="fas fa-sign-out-alt"></i> Disconnect</a>
+          <a href="#" onclick="logout();return false;" class="btn-ghost" style="font-size:13px;padding:10px 18px;"><i class="fas fa-sign-out-alt"></i> Disconnect</a>
         </div>
       </div>
 
@@ -30,7 +30,7 @@ export function mypagePage(): string {
           </div>
           <div>
             <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:3px;">Connected Wallet</div>
-            <code id="wallet-addr" style="font-size:13px;color:#fff;font-family:monospace;">0x742d...F4e2</code>
+            <code id="wallet-addr" style="font-size:13px;color:#fff;font-family:monospace;">Connecting...</code>
           </div>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap;">
@@ -160,11 +160,11 @@ export function mypagePage(): string {
             <div style="width:72px;height:72px;background:linear-gradient(135deg,#003BFF,#31F2C3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
               <i class="fas fa-user" style="font-size:28px;color:#fff;"></i>
             </div>
-            <div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:4px;">AILINK User</div>
-            <div style="font-size:12px;color:var(--text-muted);margin-bottom:14px;font-family:monospace;">0x742d...F4e2</div>
+            <div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:4px;" id="profile-name">AILINK User</div>
+            <div style="font-size:12px;color:var(--text-muted);margin-bottom:14px;font-family:monospace;" id="profile-sub">—</div>
             <div style="display:flex;justify-content:center;gap:10px;margin-bottom:16px;">
               <span class="badge badge-mint">Early Supporter</span>
-              <span class="badge badge-blue">BNB Chain</span>
+              <span class="badge badge-blue" id="login-badge">—</span>
             </div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
               <div style="background:rgba(255,255,255,0.03);border-radius:10px;padding:12px;">
@@ -206,7 +206,7 @@ export function mypagePage(): string {
             <h3 style="font-size:15px;font-weight:700;margin-bottom:5px;display:flex;align-items:center;gap:7px;"><i class="fas fa-user-plus" style="color:var(--mint);font-size:13px;"></i> Referral Program</h3>
             <p style="font-size:12px;color:var(--text-muted);line-height:1.6;margin-bottom:14px;">Earn <strong style="color:var(--mint);">+100 AILINK Points</strong> for every friend you invite.</p>
             <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:10px 12px;display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-              <code id="ref-link" style="font-size:11px;color:var(--text-muted);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">ailink.io/ref/0x742d...F4e2</code>
+              <code id="ref-link" style="font-size:11px;color:var(--text-muted);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">ailink.io/ref/...</code>
               <button onclick="copyRef()" style="background:none;border:none;cursor:pointer;color:var(--mint);font-size:12px;white-space:nowrap;font-family:'Inter',sans-serif;font-weight:600;">Copy</button>
             </div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:center;">
@@ -273,21 +273,82 @@ export function mypagePage(): string {
   </style>
 
   <script>
-    function copyWallet(){
-      navigator.clipboard.writeText('0x742d35Cc6634C0532925a3b844Bc454e4438F4e2');
-      showToast('Wallet address copied!');
+  // ── Auth guard ─────────────────────────────────────────────────
+  function getUser() {
+    try { return JSON.parse(sessionStorage.getItem('ailink_user') || 'null'); } catch(e) { return null; }
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const user = getUser();
+    if (!user) {
+      // Not logged in → redirect to login
+      window.location.href = '/login';
+      return;
     }
-    function copyRef(){
-      navigator.clipboard.writeText('https://ailink.io/ref/0x742d');
-      showToast('Referral link copied!');
+
+    // ── Populate UI with real session data ──
+    const isWallet = user.type === 'wallet';
+    const displayName = isWallet
+      ? (user.name || user.wallet.slice(0,6) + '...' + user.wallet.slice(-4))
+      : (user.name || user.email);
+    const addrShort = user.wallet
+      ? user.wallet.slice(0,6) + '...' + user.wallet.slice(-4)
+      : '—';
+
+    // Header greeting
+    const greet = document.getElementById('user-greeting');
+    if (greet) greet.textContent = displayName;
+
+    // Profile card
+    const profName = document.getElementById('profile-name');
+    const profSub  = document.getElementById('profile-sub');
+    if (profName) profName.textContent = displayName;
+    if (profSub)  profSub.textContent  = isWallet ? addrShort : user.email;
+
+    // Wallet address bar
+    const walletEl = document.getElementById('wallet-addr');
+    if (walletEl) walletEl.textContent = isWallet ? addrShort : 'Email Account';
+
+    // Referral link
+    const refLink = document.getElementById('ref-link');
+    if (refLink) refLink.textContent = 'ailink.io/ref/' + (user.wallet ? user.wallet.slice(0,10) : 'demo');
+
+    // Login method badge
+    const loginBadge = document.getElementById('login-badge');
+    if (loginBadge) {
+      loginBadge.textContent = isWallet
+        ? (user.walletProvider || 'Wallet') + ' Connected'
+        : 'Email Account';
     }
-    function showToast(msg){
-      const d=document.createElement('div');
-      d.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#161920;border:1px solid rgba(49,242,195,0.2);border-radius:12px;padding:12px 20px;font-size:13px;color:#fff;z-index:9999;display:flex;align-items:center;gap:8px;white-space:nowrap;transition:opacity 0.4s;';
-      d.innerHTML='<i class="fas fa-check-circle" style="color:var(--mint);"></i> '+msg;
-      document.body.appendChild(d);
-      setTimeout(()=>{d.style.opacity='0';setTimeout(()=>d.remove(),400);},2400);
-    }
+  });
+
+  // ── Logout ─────────────────────────────────────────────────────
+  function logout() {
+    sessionStorage.removeItem('ailink_user');
+    showToast('Logged out successfully');
+    setTimeout(() => { window.location.href = '/login'; }, 1200);
+  }
+
+  // ── Copy helpers ───────────────────────────────────────────────
+  function copyWallet() {
+    const user = getUser();
+    const addr = user && user.wallet ? user.wallet : '0x742d35Cc6634C0532925a3b844Bc454e4438F4e2';
+    navigator.clipboard.writeText(addr).then(() => showToast('Wallet address copied!'));
+  }
+  function copyRef() {
+    const user = getUser();
+    const ref = 'https://ailink.io/ref/' + (user && user.wallet ? user.wallet.slice(0,10) : 'demo');
+    navigator.clipboard.writeText(ref).then(() => showToast('Referral link copied!'));
+  }
+
+  // ── Toast ───────────────────────────────────────────────────────
+  function showToast(msg, color) {
+    const d = document.createElement('div');
+    d.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#161920;border:1px solid rgba(49,242,195,0.2);border-radius:12px;padding:12px 20px;font-size:13px;color:#fff;z-index:9999;display:flex;align-items:center;gap:8px;white-space:nowrap;transition:opacity 0.4s;';
+    d.innerHTML = '<i class="fas fa-check-circle" style="color:' + (color || 'var(--mint)') + ';"></i> ' + msg;
+    document.body.appendChild(d);
+    setTimeout(() => { d.style.opacity = '0'; setTimeout(() => d.remove(), 400); }, 2400);
+  }
   </script>
   `
   return layout('My Dashboard — AILINK', content)
